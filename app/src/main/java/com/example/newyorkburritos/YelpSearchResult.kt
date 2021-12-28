@@ -18,18 +18,29 @@ data class YelpRestaurant (
     val categories: List<YelpCategory>,
     val location: YelpLocation
 ) {
-    fun displayDistance() : String{
+    fun displayDistance(): String {
         val milesPerMiter = 0.00062137
-        val distanceInMiles = "%.2f".format(distanceInMeters*milesPerMiter)
+        val distanceInMiles = "%.2f".format(distanceInMeters * milesPerMiter)
         return "$distanceInMiles mi"
     }
+
+    fun displayCategories(): String {
+        if (categories.isNotEmpty()) {
+            val builder = StringBuilder()
+            for (category in categories) {
+                builder.append(category.title).append(", ")
+            }
+            return builder.toString().dropLast(2)
+        }
+        return ""
+    }
+
+    data class YelpCategory(
+        val title: String
+    )
+
+    data class YelpLocation(
+        @SerializedName("address1") val address: String
+    )
 }
-
-data class YelpCategory(
-    val title: String
-)
-
-data class YelpLocation(
-    @SerializedName("address1") val address: String,
-)
 

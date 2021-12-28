@@ -39,7 +39,7 @@ class RestaurantsAdapter(val context: Context, val restaurants: List<YelpRestaur
             tvNumReviews.text = "${restaurant.numReview} Reviews"
             tvPrice.text = restaurant.price
             tvAddress.text = restaurant.location.address
-            tvCategories.text = restaurant.categories[0].title
+            tvCategories.text = restaurant.displayCategories()
             ratingBar.rating = restaurant.rating.toFloat()
 
             val radius = 15 // corner radius, higher value = more rounded
