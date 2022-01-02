@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private var limit = 10
     private var offset = 0
-    var isLoading = false
+    var isLoading = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         rvRestaurants.layoutManager = layoutManager
         getRestaurants()
-
         // RecyclerView Pagination********************************
         rvRestaurants.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -51,19 +50,21 @@ class MainActivity : AppCompatActivity() {
                 val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
                 val total = restaurantsAdapter.itemCount
 
-                if (!isLoading) {
-
-                    if ((visibleItemCount + pastVisibleItem) >= total) {
-                        offset+=(limit+1)
-                        Log.i("offset", "$offset")
-                        getRestaurants()
-                    }
+                if (isLoading){
+                    return
                 }
+
+                if ((visibleItemCount + pastVisibleItem) >= total) {
+                    offset+=(limit+1)
+                    Log.i("MainActivity", "next(page) offset $offset")
+                    getRestaurants()
+                    isLoading = true
+                }
+
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
     }
-
     private fun getRestaurants() {
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val yelpService = retrofit.create(YelpService::class.java)
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                     Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
                     return
                 }
+                isLoading = false
                 restaurants.addAll(body.restaurants)
                 restaurantsAdapter.notifyDataSetChanged()
             }

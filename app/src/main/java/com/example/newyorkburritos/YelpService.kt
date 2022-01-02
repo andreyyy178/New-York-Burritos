@@ -13,5 +13,6 @@ public interface YelpService {
         @Query("limit") limit:Int,
         @Query("offset") offset:Int,
         @Query("location") location:String) : Call<YelpSearchResult>
-
 }
+
+
