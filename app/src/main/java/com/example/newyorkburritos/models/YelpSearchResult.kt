@@ -1,20 +1,20 @@
-package com.example.newyorkburritos
+package com.example.newyorkburritos.models
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 
 data class YelpSearchResult(
     //@SerializedName("total") val total: Int,
-    @SerializedName("businesses") val restaurants: List<YelpRestaurant>
+    @field:Json(name = "businesses") val restaurants: List<YelpRestaurant>
     )
 
 data class YelpRestaurant (
     val name: String,
     val rating: Double,
     val price: String,
-    @SerializedName("review_count") val numReview: Int,
-    @SerializedName("distance")  val distanceInMeters: Double,
-    @SerializedName("image_url") val imageUrl: String,
+    @field:Json(name = "review_count") val numReview: Int,
+    @field:Json(name = "distance")  val distanceInMeters: Double,
+    @field:Json(name = "image_url") val imageUrl: String,
     val categories: List<YelpCategory>,
     val location: YelpLocation
 ) {
@@ -40,7 +40,7 @@ data class YelpRestaurant (
     )
 
     data class YelpLocation(
-        @SerializedName("address1") val address: String
+        @field:Json(name = "address1") val address: String
     )
 }
 

@@ -1,7 +1,6 @@
-package com.example.newyorkburritos
+package com.example.newyorkburritos.restaurants
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,8 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.newyorkburritos.R
+import com.example.newyorkburritos.models.YelpRestaurant
 
 
 class RestaurantsAdapter(val context: Context, val restaurants: List<YelpRestaurant>) :
@@ -48,7 +49,6 @@ class RestaurantsAdapter(val context: Context, val restaurants: List<YelpRestaur
                 .load(restaurant.imageUrl).apply(cropOptions)
                 .into(imImage)
         }
-
     }
 
     // Usually involves inflating a layout from XML and returning the holder
